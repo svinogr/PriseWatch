@@ -5,6 +5,6 @@ data class Item(var id: Int = 0,
                 var price: Double = 0.0,
                 var img: String ="") {
     override fun toString(): String {
-        return "Item(id=$id, title='$title', price=$price, img='$img')"
+        return "Item(id=$id ,\n title='$title',\n price=$price,\n img='$img')"
     }
 }

@@ -1,20 +1,23 @@
-package com.example.prisewatch.domain
+package com.example.prisewatch.domain.ImplParceleable
 
 import android.util.Log
 import com.example.myapplication.model.Item
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import java.io.IOException
-import java.util.regex.Pattern
+import com.example.prisewatch.domain.Parserable
+import com.example.prisewatch.domain.webclient.WebClientable
+import com.gargoylesoftware.htmlunit.Page
+import org.json.JSONObject
 
-class DnsParser {
+
+class DnsParser(var webClient: WebClientable) : Parserable {
+    override suspend fun getParsedItems(urls: Array<String>): ArrayList<Item> {
+        return ArrayList()
+    }
 
     // запуск  GlobalScope.launch(Dispatchers.IO) {
     //            createDNSParser()
     //        }
 
-    private suspend fun createDNSParser() {
+ /*   private suspend fun createDNSParser() {
         val url =
             "https://www.dns-shop.ru/product/d00d5ac5b4852eb1/videokarta-gigabyte-geforce-rtx-3070-ti-aorus-master-gv-n307taorus-m-8gd/"
 
@@ -25,12 +28,13 @@ class DnsParser {
         if (webResponse.contentType == "application/json") {
             var jsonString = webResponse.contentAsString
             val indexOfStartOfStringSendProductMessage = jsonString.indexOf("sendProductMessage")
-            jsonString = jsonString.substring(indexOfStartOfStringSendProductMessage + "sendProductMessage".length + 1)
+            jsonString =
+                jsonString.substring(indexOfStartOfStringSendProductMessage + "sendProductMessage".length + 1)
 
-            /*      val pattern = Pattern.compile("monthWarranty.+?}".))
+            *//*      val pattern = Pattern.compile("monthWarranty.+?}".))
                   val matcher = pattern.matcher(jsonString)
 
-     */
+     *//*
             val pattern = "monthWarranty.+?\\}".toRegex()
             val find = pattern.find(jsonString)
 
@@ -39,7 +43,7 @@ class DnsParser {
             print(jsonString)
             jsonString = jsonString.replace("\\\\\"".toRegex(), "\"")
             print(jsonString)
-            val json  = JSONObject(jsonString)
+            val json = JSONObject(jsonString)
 
             product.title = json.getString("name")
             product.price = json.getString("price").toDouble()
@@ -51,14 +55,14 @@ class DnsParser {
         }
 
 
-    }
+    }*/
+/*
     private suspend fun createDNSParser2() {
         try {
             val url =
                 "https://www.dns-shop.ru/product/d00d5ac5b4852eb1/videokarta-gigabyte-geforce-rtx-3070-ti-aorus-master-gv-n307taorus-m-8gd/"
 
             val webClient: WebClient = getWebClient()
-
 
 
             val page: Page = webClient.getPage(url)
@@ -91,13 +95,12 @@ class DnsParser {
                     }
                 }
             }
-        }catch (e: Exception) {
+        } catch (e: Exception) {
             print(e.message)
         }
 
 
-
-    }
+    }*/
 
     /*var htmlPageFromWebClient: HtmlPage? = null
     try {
@@ -112,7 +115,7 @@ class DnsParser {
 
     System.out.println(productPrice)*/
 
-
+/*
     private suspend fun getProductPrice(
         url2: String,
         webClient: WebClient,
@@ -137,8 +140,8 @@ class DnsParser {
             price.title = data["name"].toString()
         }
         return price
-    }
-
+    }*/
+/*
     private suspend fun getIdUrlItem(page: HtmlPage): String {
         val parse: Document = Jsoup.parse(page.asXml())
         return parse.getElementsByAttribute("data-product-card").attr("data-product-card")
@@ -149,15 +152,48 @@ class DnsParser {
         return webClient.getPage(url)
     }
 
-    private suspend fun getWebClient(): WebClient {
-        val webClient = WebClient(BrowserVersion.INTERNET_EXPLORER)
-        webClient.options.isThrowExceptionOnScriptError = true
-        webClient.options.isJavaScriptEnabled = false
-        webClient.options.isCssEnabled = false
-        webClient.waitForBackgroundJavaScript(500);
+    override fun getParsedItems(urls: Array<String>): ArrayList<Item> {
+        TODO("Not yet implemented")
+    }*/
 
-        webClient.addRequestHeader("X-Requested-With", "XMLHttpRequest")
+    override suspend fun getParsedItem(url: String): Item {
 
-        return webClient
+      //  val webRequest = WebRequest(com.gargoylesoftware.htmlunit.javascript.host.URL(url, ))
+     //   webRequest.charset = Charset.forName("UNICODE")
+        val webClient = webClient.getWebClient()
+        val page= webClient.getPage<Page>(url + "window.location.hash")
+        val webResponse = page.webResponse
+        val product = Item()
+        Log.d("TAG", "get parsed")
+        Log.d("TAG", webResponse.contentType)
+        Log.d("TAG", webResponse.contentAsString)
+        if (webResponse.contentType == "application/json") {
+            var jsonString = webResponse.contentAsString
+            val indexOfStartOfStringSendProductMessage = jsonString.indexOf("sendProductMessage")
+            jsonString =
+                jsonString.substring(indexOfStartOfStringSendProductMessage + "sendProductMessage".length + 1)
+
+            /*      val pattern = Pattern.compile("monthWarranty.+?}".))
+                  val matcher = pattern.matcher(jsonString)
+
+     */
+            val pattern = "monthWarranty.+?\\}".toRegex()
+            val find = pattern.find(jsonString)
+
+            if (find != null) {
+                jsonString = jsonString.substring(0, find.range.last + 1)
+            }
+
+            print(jsonString)
+            jsonString = jsonString.replace("\\\\\"".toRegex(), "\"")
+           Log.d("TAG", "json string" + jsonString)
+            val json = JSONObject(jsonString)
+
+            product.title = json.getString("name")
+            product.price = json.getString("price").toDouble()
+
+        }
+
+        return product
     }
 }
