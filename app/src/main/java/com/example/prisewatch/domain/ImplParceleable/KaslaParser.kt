@@ -24,6 +24,6 @@ class KaslaParser(webClientable: WebClientable) : AbstractParser(webClientable) 
         val price = section?.getElementById("elementTools")!!.getElementsByClass("priceVal")[0].text().
         split("руб")[0].trim().replace(" ", "").toDouble()
 
-        return Item(img = img,title = title!!, price = price)
+        return Item(imgUrl = img,title = title!!, price = price)
     }
 }

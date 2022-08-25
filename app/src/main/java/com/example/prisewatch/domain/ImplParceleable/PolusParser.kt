@@ -1,6 +1,5 @@
 package com.example.prisewatch.domain.ImplParceleable
 
-import android.util.Log
 import com.example.myapplication.model.Item
 import com.example.prisewatch.domain.webclient.WebClientable
 import com.gargoylesoftware.htmlunit.html.HtmlPage
@@ -23,6 +22,6 @@ class PolusParser(webClient: WebClientable) : AbstractParser(webClient) {
         val name = section.getElementsByAttributeValue("itemprop", "name")[0].text()
         val img = section.getElementsByAttribute("data-src-img").attr("data-src-img")
 
-        return Item(title = name, price = price.toDouble(), img = img )
+        return Item(title = name, price = price.toDouble(), imgUrl = img )
     }
 }
