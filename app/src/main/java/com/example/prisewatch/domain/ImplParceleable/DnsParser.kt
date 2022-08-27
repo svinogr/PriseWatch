@@ -4,8 +4,11 @@ import android.util.Log
 import com.example.myapplication.model.Item
 import com.example.prisewatch.domain.Parserable
 import com.example.prisewatch.domain.webclient.WebClientable
+import com.example.prisewatch.model.Price
 import com.gargoylesoftware.htmlunit.Page
 import org.json.JSONObject
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class DnsParser(var webClient: WebClientable) : Parserable {
@@ -190,7 +193,7 @@ class DnsParser(var webClient: WebClientable) : Parserable {
             val json = JSONObject(jsonString)
 
             product.title = json.getString("name")
-            product.price = json.getString("price").toDouble()
+            product.listPrice.add(Price(0,  json.getString("price").toDouble(), Date()))
 
         }
 

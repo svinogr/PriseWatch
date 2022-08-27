@@ -2,8 +2,11 @@ package com.example.prisewatch.domain.ImplParceleable
 
 import com.example.myapplication.model.Item
 import com.example.prisewatch.domain.webclient.WebClientable
+import com.example.prisewatch.model.Price
 import com.gargoylesoftware.htmlunit.html.HtmlPage
 import org.jsoup.Jsoup
+import java.util.*
+import kotlin.collections.ArrayList
 
 class KaslaParser(webClientable: WebClientable) : AbstractParser(webClientable) {
     override suspend fun getParsedItems(urls: Array<String>): ArrayList<Item> {
@@ -24,6 +27,6 @@ class KaslaParser(webClientable: WebClientable) : AbstractParser(webClientable) 
         val price = section?.getElementById("elementTools")!!.getElementsByClass("priceVal")[0].text().
         split("руб")[0].trim().replace(" ", "").toDouble()
 
-        return Item(imgUrl = img,title = title!!, price = price)
+        return Item(imgUrl = img,title = title!!).also { it.listPrice.add(Price(0, price, Date())) }
     }
 }

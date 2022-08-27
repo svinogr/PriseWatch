@@ -1,5 +1,6 @@
 package com.example.prisewatch.ui.home.ItemHolder
 
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -11,15 +12,15 @@ import com.example.myapplication.model.Item
 import com.example.prisewatch.R
 import com.example.prisewatch.ui.home.ItemDetailFragment
 
-class ItemHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val img: ImageView = itemView.findViewById(R.id.item_card_img)
     val title: TextView = itemView.findViewById(R.id.item_card_title)
     val shop: TextView = itemView.findViewById(R.id.item_card_shop)
     val price: TextView = itemView.findViewById(R.id.item_card_price)
     val imgSign: ImageView = itemView.findViewById(R.id.item_card_sign)
 
-
     fun bind(item: Item) {
+        Log.d("TAG", "${item}")
         Glide.with(itemView.context)
             .load(item.imgUrl)
             .centerCrop()
@@ -27,14 +28,18 @@ class ItemHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
             .into(img)
 
         title.text = item.title
-      //  shop.text = item.shop
-        shop.text = "магазин"
-        price.text = item.price.toString()
+        //  shop.text = item.shop
+        shop.text = item.shop
+        price.text = item.listPrice[1].value.toString()
         // add img sign
 
-        itemView.setOnClickListener(object: View.OnClickListener {
+        itemView.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
-                Navigation.findNavController(itemView).navigate(R.id.action_nav_home_to_itemDetailFragment, bundleOf(ItemDetailFragment.ID_ITEM to item.id))
+                Log.d("TAG", "do ${item.id}")
+                Navigation.findNavController(itemView).navigate(
+                    R.id.action_nav_home_to_itemDetailFragment,
+                    bundleOf(ItemDetailFragment.ID_ITEM to item.id)
+                )
             }
         })
     }

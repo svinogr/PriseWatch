@@ -7,6 +7,7 @@ import com.example.myapplication.model.Item
 import com.example.prisewatch.db.room.dao.ItemDao
 import com.example.prisewatch.db.room.db.DataBase
 import com.example.prisewatch.db.room.entities.ItemEntity
+import com.example.prisewatch.db.room.entities.ItemWithPrices
 import java.lang.IllegalStateException
 
 class ItemRepo private constructor(context: Context) {
@@ -14,7 +15,7 @@ class ItemRepo private constructor(context: Context) {
         context.applicationContext,
         DataBase::class.java,
         DataBase.NAME
-    ).build()
+    ).createFromAsset("initial.db").build()
 
     private val itemDao = db.itemDao()
 
@@ -32,7 +33,7 @@ class ItemRepo private constructor(context: Context) {
         }
     }
 
-    fun getItems(): List<ItemEntity> {
+    fun getItems(): List<ItemWithPrices> {
        return itemDao.getAll()
     }
 

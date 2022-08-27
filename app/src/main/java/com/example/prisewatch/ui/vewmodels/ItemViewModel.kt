@@ -20,25 +20,26 @@ class ItemViewModel : ViewModel() {
 
     fun getAllItems() {
         viewModelScope.launch(Dispatchers.IO) {
-           /* val fabric = ParserFabric()
-            val parserByDomain = fabric.getParserByDomain("www.kasla.ru")
-            val item =
-                //parserByDomain.getParsedItem("https://www.citilink.ru/product/pamyat-ddr4-16gb-2666mhz-crucial-cb16gs2666-oem-pc4-21300-cl16-so-dimm-1430548/")
-                parserByDomain.getParsedItem("https://kasla.ru/catalog/accessories/zaryadnye_ustroystva_i_adaptery/avtomobilnoe_zaryadnoe_ustroystvo_anker_power_drive_2_ru.html?offerID=5339")
+            /* val fabric = ParserFabric()
+             val parserByDomain = fabric.getParserByDomain("www.kasla.ru")
+             val item =
+                 //parserByDomain.getParsedItem("https://www.citilink.ru/product/pamyat-ddr4-16gb-2666mhz-crucial-cb16gs2666-oem-pc4-21300-cl16-so-dimm-1430548/")
+                 parserByDomain.getParsedItem("https://kasla.ru/catalog/accessories/zaryadnye_ustroystva_i_adaptery/avtomobilnoe_zaryadnoe_ustroystvo_anker_power_drive_2_ru.html?offerID=5339")
 
-            Log.d("TAG", "$item")
-            val list = mutableListOf<Item>().apply { add(item) }
-         //   ItemRepo.get().getItems()
-            ItemRepo.get().insertItem(
-                ItemEntity(id = 0, title = item.title, price = item.price, urlImg = item.imgUrl)
-            )*/
-     /*       ItemRepo.get().insertItem(
-                ItemEntity(id = 0, title = "dwdwd", price = 0.0, urlImg = "dwdwd")
-            )*/
+             Log.d("TAG", "$item")
+             val list = mutableListOf<Item>().apply { add(item) }
+          //   ItemRepo.get().getItems()
+             ItemRepo.get().insertItem(
+                 ItemEntity(id = 0, title = item.title, price = item.price, urlImg = item.imgUrl)
+             )*/
+            /*       ItemRepo.get().insertItem(
+                       ItemEntity(id = 0, title = "dwdwd", price = 0.0, urlImg = "dwdwd")
+                   )*/
 
-            val list = ItemRepo.get().getItems().stream().map { Item(it.id, "${it.title} ${it.id}", "", it.price, it.urlImg) }.collect(toList())
-
-            _itemList.postValue(list)
+            //val list = ItemRepo.get().getItems().stream().map { Item(it.id, "${it.title} ${it.id}", "", it.price, it.urlImg) }.collect(toList())
+            val items = ItemRepo.get().getItems()
+            Log.d("TAG", "$items")
+            _itemList.postValue(items.map { it.entityToItem() })
         }
 
     }

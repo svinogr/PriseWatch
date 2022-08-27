@@ -1,6 +1,7 @@
 package com.example.prisewatch.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,7 @@ import com.example.prisewatch.databinding.FragmentItemDetailBinding
 class ItemDetailFragment : Fragment() {
     private var _binding: FragmentItemDetailBinding? = null
     private val binding get() = _binding!!
-    private var idItem: Int? = null
+    private var idItem: Long? = null
 
     companion object {
         const val ID_ITEM = "id"
@@ -23,7 +24,8 @@ class ItemDetailFragment : Fragment() {
     ): View? {
         _binding = FragmentItemDetailBinding.inflate(inflater, container, false)
         arguments.let {
-            idItem = arguments?.getInt(ID_ITEM)
+            idItem = arguments?.getLong(ID_ITEM)
+            Log.d("TAG", "$idItem")
         }
 
         binding.frItemDetailTitle.text = idItem.toString()
