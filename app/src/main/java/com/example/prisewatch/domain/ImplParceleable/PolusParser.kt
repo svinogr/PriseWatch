@@ -2,7 +2,7 @@ package com.example.prisewatch.domain.ImplParceleable
 
 import com.example.myapplication.model.Item
 import com.example.prisewatch.domain.webclient.WebClientable
-import com.example.prisewatch.model.Price
+import com.example.prisewatch.domain.model.Price
 import com.gargoylesoftware.htmlunit.html.HtmlPage
 import org.jsoup.Jsoup
 import java.util.*

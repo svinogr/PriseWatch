@@ -30,7 +30,7 @@ class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         title.text = item.title
         //  shop.text = item.shop
         shop.text = item.shop
-        price.text = item.listPrice[1].value.toString()
+        price.text = item.listPrice.last().value.toString()
         // add img sign
 
         itemView.setOnClickListener(object : View.OnClickListener {

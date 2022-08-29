@@ -1,16 +1,18 @@
 package com.example.prisewatch.db.room.entities
 
-import androidx.room.ColumnInfo
-import androidx.room.Embedded
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
 import com.example.myapplication.model.Item
 
-@Entity(tableName = "items")
+@Entity(
+    tableName = "items",
+    indices = [
+        Index("url_link", unique = true)
+    ]
+)
 data class ItemEntity(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
-    @ColumnInfo(name = "title") val title: String,
-    @ColumnInfo(name = "url_link") val urlLink: String,
-    @ColumnInfo(name = "url_img") val urlImg: String
+    @PrimaryKey(autoGenerate = true) var id: Long = 0,
+    @ColumnInfo(name = "title") var title: String,
+    @ColumnInfo(name = "url_link") var urlLink: String,
+    @ColumnInfo(name = "url_img") var urlImg: String
 )
 

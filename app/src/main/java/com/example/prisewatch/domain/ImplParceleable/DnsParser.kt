@@ -4,7 +4,7 @@ import android.util.Log
 import com.example.myapplication.model.Item
 import com.example.prisewatch.domain.Parserable
 import com.example.prisewatch.domain.webclient.WebClientable
-import com.example.prisewatch.model.Price
+import com.example.prisewatch.domain.model.Price
 import com.gargoylesoftware.htmlunit.Page
 import org.json.JSONObject
 import java.util.*

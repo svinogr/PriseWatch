@@ -1,6 +1,6 @@
 package com.example.myapplication.model
 
-import com.example.prisewatch.model.Price
+import com.example.prisewatch.domain.model.Price
 import java.net.URL
 
 data class Item(

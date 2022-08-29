@@ -1,4 +1,4 @@
-package com.example.prisewatch.model
+package com.example.prisewatch.domain.model
 
 import java.util.*
 

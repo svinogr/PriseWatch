@@ -31,6 +31,7 @@ class ItemDetailFragment : Fragment() {
         binding.frItemDetailTitle.text = idItem.toString()
 
         val root = binding.root
+
         return root
     }
 }
