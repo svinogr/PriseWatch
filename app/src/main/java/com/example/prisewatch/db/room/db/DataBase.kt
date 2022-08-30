@@ -2,7 +2,6 @@ package com.example.prisewatch.db.room.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import com.example.prisewatch.db.room.dao.ItemDao
 import com.example.prisewatch.db.room.dao.PriceDao
@@ -17,6 +16,6 @@ abstract class DataBase : RoomDatabase() {
     abstract fun priceDao(): PriceDao
 
     companion object {
-        const val NAME = "item_database"
+        const val NAME = "initial"
     }
 }

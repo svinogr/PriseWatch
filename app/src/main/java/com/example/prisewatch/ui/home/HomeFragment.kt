@@ -1,6 +1,7 @@
 package com.example.prisewatch.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.myapplication.model.Item
 import com.example.prisewatch.databinding.FragmentHomeBinding
+import com.example.prisewatch.domain.model.DTOUtils
 import com.example.prisewatch.ui.vewmodels.ItemViewModel
 
 class HomeFragment : Fragment() {
@@ -32,15 +35,25 @@ class HomeFragment : Fragment() {
         recycler.adapter = adapter
         recycler.layoutManager = linearLayoutManager
 
+
         val provider = ViewModelProviders.of(this)
         val viewmodel = provider.get(ItemViewModel::class.java)
 
         viewmodel.itemList.observe(viewLifecycleOwner) {
-            adapter.list = it
+            adapter.list = it.map {itemWithPrices -> DTOUtils.fromEntityToItem(itemWithPrices)  }
             adapter.notifyDataSetChanged()
         }
 
-        viewmodel.getAllItems()
+      //  viewmodel.getAllItems()
+
+        // кнопка
+        val btn = binding.btn
+        btn.setOnClickListener({
+            Log.d("TAG", "CLICK")
+            viewmodel.testAdd()
+        })
+        //
+
 
         // lifecycleScope.launch(Dispatchers.IO)  {
         /*   val fabric = ParserFabric()

@@ -11,6 +11,7 @@ import com.example.prisewatch.db.room.db.DataBase
 import com.example.prisewatch.db.room.entities.ItemEntity
 import com.example.prisewatch.db.room.entities.ItemWithPrices
 import com.example.prisewatch.domain.model.DTOUtils
+import kotlinx.coroutines.flow.Flow
 import java.lang.IllegalStateException
 
 class ItemRepo private constructor(context: Context) {
@@ -18,7 +19,7 @@ class ItemRepo private constructor(context: Context) {
         context.applicationContext,
         DataBase::class.java,
         DataBase.NAME
-    ).createFromAsset("initial.db").build()
+    ).createFromAsset("initial").build()
 /*  private val db: DataBase = Room.databaseBuilder(
         context.applicationContext,
         DataBase::class.java,
@@ -42,7 +43,7 @@ class ItemRepo private constructor(context: Context) {
         }
     }
 
-    fun getItems(): List<ItemWithPrices> {
+    fun getItems(): Flow<List<ItemWithPrices>> {
         return itemDao.getAll()
     }
 
@@ -54,7 +55,9 @@ class ItemRepo private constructor(context: Context) {
         fromItemToEntity.listPrice.forEach { it.itemId = idItem }
         Log.d("TAG", "${fromItemToEntity.listPrice}")
         priceDao.insert(fromItemToEntity.listPrice)
-
     }
 
+    fun getById(idItem: Long): Flow<ItemWithPrices> {
+        return itemDao.getItemById(idItem)
+    }
 }
