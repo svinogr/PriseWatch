@@ -14,19 +14,19 @@ import com.example.prisewatch.domain.webclient.ImplWebClientable.PolusWebClient
 class ParserFabric : ParserFabricable {
     override fun getParserByDomain(domain: String): Parserable {
         return when (domain) {
-            "www.dns-shop.ru" -> {
+            "dns-shop.ru" -> {
                 val dns = DNSWebClient()
                 DnsParser(dns)
             }
-            "www.citilink.ru" -> {
+            "citilink.ru" -> {
                 val ctl = CityWebParser()
                 CTLParser(ctl)
             }
 
-            "www.polus.ru" -> {
+            "polus.ru" -> {
                 PolusParser(PolusWebClient())
             }
-            "www.kasla.ru" -> {
+            "kasla.ru" -> {
                 KaslaParser(KaslaWebClient())
             }
 

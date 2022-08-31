@@ -53,7 +53,6 @@ class ItemRepo private constructor(context: Context) {
         val idItem = itemDao.insert(fromItemToEntity.entity)[0]
         if (idItem == -1L) return
         fromItemToEntity.listPrice.forEach { it.itemId = idItem }
-        Log.d("TAG", "${fromItemToEntity.listPrice}")
         priceDao.insert(fromItemToEntity.listPrice)
     }
 

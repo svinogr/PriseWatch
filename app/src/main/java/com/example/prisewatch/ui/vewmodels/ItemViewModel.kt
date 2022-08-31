@@ -1,18 +1,29 @@
 package com.example.prisewatch.ui.vewmodels
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.prisewatch.db.room.entities.ItemWithPrices
 import com.example.prisewatch.db.room.repo.ItemRepo
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.util.*
 
 class ItemViewModel : ViewModel() {
-    private var _itemList = ItemRepo.get().getItems().asLiveData(viewModelScope.coroutineContext)
-    var itemList = _itemList
+    private var _itemList = MutableLiveData<List<ItemWithPrices>>()
+    val itemList = _itemList
 
-    fun testAdd() {
+    fun getAllItems() {
+            viewModelScope.launch(Dispatchers.IO) {
+            ItemRepo.get().getItems().collect{
+                _itemList.postValue(it)
+            }
+        }
+    }
+
+ /*   fun testAdd() {
         viewModelScope.launch(Dispatchers.IO) {
             val repo = ItemRepo.get()
             val uuid = UUID.randomUUID()
@@ -27,5 +38,5 @@ class ItemViewModel : ViewModel() {
             repo.insertItem(item)
         }
 
-    }
+    }*/
 }

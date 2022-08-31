@@ -35,7 +35,6 @@ class HomeFragment : Fragment() {
         recycler.adapter = adapter
         recycler.layoutManager = linearLayoutManager
 
-
         val provider = ViewModelProviders.of(this)
         val viewmodel = provider.get(ItemViewModel::class.java)
 
@@ -44,14 +43,14 @@ class HomeFragment : Fragment() {
             adapter.notifyDataSetChanged()
         }
 
-      //  viewmodel.getAllItems()
+        viewmodel.getAllItems()
 
         // кнопка
-        val btn = binding.btn
+  /*      val btn = binding.btn
         btn.setOnClickListener({
             Log.d("TAG", "CLICK")
             viewmodel.testAdd()
-        })
+        })*/
         //
 
 
