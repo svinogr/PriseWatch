@@ -11,9 +11,9 @@ data class PriceEntity (
     @PrimaryKey(autoGenerate = true) var id: Long,
     @ColumnInfo(name = "item_id") var itemId: Long,
     @ColumnInfo(name = "price") var price: Double,
-    @ColumnInfo(name = "date") var date: Date
+    @ColumnInfo(name = "date") var date: Long
 ) {
     fun entityToPrice(): Price {
-        return Price(id, price, date)
+        return Price(id, itemId, price, date)
     }
 }

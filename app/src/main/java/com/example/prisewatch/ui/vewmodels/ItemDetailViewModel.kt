@@ -15,9 +15,8 @@ class ItemDetailViewModel : ViewModel() {
 
     fun findById(id: Long) {
         viewModelScope.launch(Dispatchers.IO) {
-            ItemRepo.get().getById(id).collect {
-                _item.postValue(it)
+            _item.postValue(ItemRepo.get().getById(id))
+
             }
         }
     }
-}

@@ -26,10 +26,10 @@ class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             .into(img)
 
         title.text = item.title
-        shop.text = item.shop
+        shop.text = item.host
 
         if (item.listPrice.isNotEmpty()) {
-            price.text = item.listPrice.last().value.toString()
+            price.text = item.listPrice.last().price.toString()
         }
 
         itemView.setOnClickListener(object : View.OnClickListener {

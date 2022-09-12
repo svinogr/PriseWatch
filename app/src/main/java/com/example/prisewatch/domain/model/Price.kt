@@ -4,6 +4,7 @@ import java.util.*
 
 class Price(
     val id: Long,
-    val value: Double,
-    val date: Date
+    val itemId: Long,
+    val price: Double,
+    val date: Long
 )

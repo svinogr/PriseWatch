@@ -39,18 +39,19 @@ class HomeFragment : Fragment() {
         val viewmodel = provider.get(ItemViewModel::class.java)
 
         viewmodel.itemList.observe(viewLifecycleOwner) {
-            adapter.list = it.map {itemWithPrices -> DTOUtils.fromEntityToItem(itemWithPrices)  }
+            adapter.list = it
             adapter.notifyDataSetChanged()
         }
 
-        viewmodel.getAllItems()
+        viewmodel.getListItemsById()
+      //  viewmodel.getAllItems()
 
         // кнопка
-  /*      val btn = binding.btn
+        val btn = binding.btn
         btn.setOnClickListener({
             Log.d("TAG", "CLICK")
             viewmodel.testAdd()
-        })*/
+        })
         //
 
 

@@ -42,7 +42,7 @@ class ShareActivity : AppCompatActivity() {
 
         viemodel.item.observe(this) {
             title.text = it.title
-            shop.text = it.shop
+            shop.text = it.host
 
             Glide.with(this)
                 .load(it.imgUrl)
@@ -51,7 +51,7 @@ class ShareActivity : AppCompatActivity() {
                 .into(img)
         }
 
-        viemodel.parse(data)
+      //  viemodel.parse(data)
     }
 
     private fun getDataFromIntetnt(intent: Intent?): String {

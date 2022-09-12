@@ -23,9 +23,13 @@
 
         <TextView
             android:id="@+id/item_card_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="marquee"
+            android:singleLine="true"
             app:layout_constraintEnd_toStartOf="@+id/item_card_price"
             app:layout_constraintStart_toEndOf="@+id/item_card_img"
             app:layout_constraintTop_toTopOf="@+id/item_card_img"

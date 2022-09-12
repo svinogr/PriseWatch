@@ -71,7 +71,7 @@ class ItemDetailFragment : Fragment() {
 
             (requireActivity() as AppCompatActivity).supportActionBar?.title = item.title
             title.text = item.title
-            shop.text = item.shop
+            shop.text = item.host
         }
 
         viewModel.findById(idItem)

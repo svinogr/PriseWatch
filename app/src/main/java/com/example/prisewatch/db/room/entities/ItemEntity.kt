@@ -13,6 +13,7 @@ data class ItemEntity(
     @PrimaryKey(autoGenerate = true) var id: Long = 0,
     @ColumnInfo(name = "title") var title: String,
     @ColumnInfo(name = "url_link") var urlLink: String,
-    @ColumnInfo(name = "url_img") var urlImg: String
+    @ColumnInfo(name = "url_img") var urlImg: String,
+    @ColumnInfo(name = "host") var host: String
 )
 

@@ -15,16 +15,16 @@ import kotlinx.coroutines.flow.Flow
 import java.lang.IllegalStateException
 
 class ItemRepo private constructor(context: Context) {
-    private val db: DataBase = Room.databaseBuilder(
+  /*  private val db: DataBase = Room.databaseBuilder(
         context.applicationContext,
         DataBase::class.java,
         DataBase.NAME
-    ).createFromAsset("initial").build()
-/*  private val db: DataBase = Room.databaseBuilder(
+    ).createFromAsset("initial").build()*/
+  private val db: DataBase = Room.databaseBuilder(
         context.applicationContext,
         DataBase::class.java,
         DataBase.NAME
-    ).build()*/
+    ).build()
 
     private val itemDao = db.itemDao()
     private val priceDao = db.priceDao()
@@ -43,7 +43,7 @@ class ItemRepo private constructor(context: Context) {
         }
     }
 
-    fun getItems(): Flow<List<ItemWithPrices>> {
+    fun getItems(): List<ItemWithPrices> {
         return itemDao.getAll()
     }
 
@@ -56,7 +56,7 @@ class ItemRepo private constructor(context: Context) {
         priceDao.insert(fromItemToEntity.listPrice)
     }
 
-    fun getById(idItem: Long): Flow<ItemWithPrices> {
+    fun getById(idItem: Long): ItemWithPrices {
         return itemDao.getItemById(idItem)
     }
 }
