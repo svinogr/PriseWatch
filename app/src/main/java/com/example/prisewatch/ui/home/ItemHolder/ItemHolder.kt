@@ -20,7 +20,7 @@ class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun bind(item: Item) {
         Glide.with(itemView.context)
-            .load(item.imgUrl)
+            .load(item.fullLinImg())
             .centerCrop()
             .placeholder(R.color.purple_700)
             .into(img)
@@ -28,8 +28,8 @@ class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         title.text = item.title
         shop.text = item.host
 
-        if (item.listPrice.isNotEmpty()) {
-            price.text = item.listPrice.last().price.toString()
+        if (item.priceList.isNotEmpty()) {
+            price.text = item.priceList.last().price.toString()
         }
 
         itemView.setOnClickListener(object : View.OnClickListener {

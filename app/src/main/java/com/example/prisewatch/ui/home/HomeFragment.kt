@@ -5,20 +5,23 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.myapplication.model.Item
+import androidx.recyclerview.widget.RecyclerView
 import com.example.prisewatch.databinding.FragmentHomeBinding
-import com.example.prisewatch.domain.model.DTOUtils
 import com.example.prisewatch.ui.vewmodels.ItemViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class HomeFragment : Fragment() {
-
+    private lateinit var viewmodel: ItemViewModel
     private var _binding: FragmentHomeBinding? = null
-
     private val binding get() = _binding!!
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: ItemAdapter
+    private lateinit var fabBtn: FloatingActionButton
+    private lateinit var progress: ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,50 +30,59 @@ class HomeFragment : Fragment() {
     ): View {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
-        val recycler = binding.homeFrRecycler
-        val adapter = ItemAdapter(listOf())
-        val linearLayoutManager = LinearLayoutManager(requireContext())
-        recycler.adapter = adapter
-        recycler.layoutManager = linearLayoutManager
+        setupViews()
+        setupViewModel()
+        setupButton()
 
+        viewmodel.getListItemsById()
+
+        return binding.root
+    }
+
+    private fun setupButton() {
+        val btn = binding.homeFrFab
+        btn.setOnClickListener {
+            startAddDiaolog()
+        }
+    }
+
+    private fun startAddDiaolog() {
+        Log.d("TAG", "Start add url dialog")
+    }
+
+    private fun setupViewModel() {
         val provider = ViewModelProviders.of(this)
-        val viewmodel = provider.get(ItemViewModel::class.java)
+        viewmodel = provider.get(ItemViewModel::class.java)
 
         viewmodel.itemList.observe(viewLifecycleOwner) {
             adapter.list = it
             adapter.notifyDataSetChanged()
         }
 
-        viewmodel.getListItemsById()
-      //  viewmodel.getAllItems()
+        viewmodel.progress.observe(viewLifecycleOwner) {
+            progressBarVisible(it)
+        }
+    }
 
-        // кнопка
-        val btn = binding.btn
-        btn.setOnClickListener({
-            Log.d("TAG", "CLICK")
-            viewmodel.testAdd()
-        })
-        //
+    private fun progressBarVisible(progressRun: Boolean) {
+        if (progressRun) {
+            progress.visibility = View.VISIBLE
+        } else {
+            progress.visibility = View.GONE
+        }
+    }
 
+    private fun setupViews() {
+        recyclerView = binding.homeFrRecycler
+        adapter = ItemAdapter(listOf())
+        val linearLayoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = linearLayoutManager
 
-        // lifecycleScope.launch(Dispatchers.IO)  {
-        /*   val fabric = ParserFabric()
-           val parserByDomain = fabric.getParserByDomain("www.dns-shop.ru")
-           val item =
-               parserByDomain.getParsedItem("https://www.dns-shop.ru/product/d00d5ac5b4852eb1/videokarta-gigabyte-geforce-rtx-3070-ti-aorus-master-gv-n307taorus-m-8gd/")
-           Log.d("TAG", "$item.title ${item.price}")*/
-        /*  val fabric = ParserFabric()
-           val parserByDomain = fabric.getParserByDomain("www.polus.ru")
-           val item =
-               //parserByDomain.getParsedItem("https://www.citilink.ru/product/pamyat-ddr4-16gb-2666mhz-crucial-cb16gs2666-oem-pc4-21300-cl16-so-dimm-1430548/")
-               parserByDomain.getParsedItem("https://polus.su/noutbuki/haier/pk-office-515-mt-i5-9400-8gb-ssd500gb-uhdg-630-free-dos-gbiteth-500w-klaviatura-mysh-chernyy--14")
-           */
+        fabBtn = binding.homeFrFab
 
-        //  }
-
-        return root
+        progress = binding.homeFrProgress
     }
 
     override fun onDestroyView() {

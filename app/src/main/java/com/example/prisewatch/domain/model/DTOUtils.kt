@@ -15,7 +15,7 @@ class DTOUtils {
                 itemWithPrices.entity.urlImg,
 
                 ).apply {
-                listPrice = itemWithPrices.listPrice.map { priceEntity ->
+                priceList = itemWithPrices.listPrice.map { priceEntity ->
                     Price(
                         priceEntity.id,
                         priceEntity.itemId,
@@ -29,8 +29,8 @@ class DTOUtils {
         }
 
         fun fromItemToEntity(item: Item): ItemWithPrices {
-            val entity = ItemEntity(item.id, item.title, item.urlLink, item.imgUrl, item.host)
-            val listPrice = item.listPrice.map { it -> PriceEntity(0, it.id, it.price, it.date) }
+            val entity = ItemEntity(item.id, item.title, item.urlLink, item.imgLink, item.host)
+            val listPrice = item.priceList.map { it -> PriceEntity(0, it.id, it.price, it.date) }
 
             return ItemWithPrices(entity, listPrice)
         }

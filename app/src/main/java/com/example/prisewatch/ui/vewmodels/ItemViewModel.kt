@@ -1,40 +1,26 @@
 package com.example.prisewatch.ui.vewmodels
 
-import android.os.Handler
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.myapplication.model.Item
 import com.example.prisewatch.db.room.repo.ItemRepo
-import com.example.prisewatch.domain.model.DTOUtils
 import com.example.prisewatch.retrofit.ItemRetrofitService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Response
 import java.util.*
-import javax.security.auth.callback.Callback
 
 class ItemViewModel : ViewModel() {
     private var _itemList = MutableLiveData<List<Item>>()
-    val itemList = _itemList
+    val itemList: LiveData<List<Item>> = _itemList
+    private var _progress = MutableLiveData<Boolean>()
+    val progress: LiveData<Boolean> = _progress
 
-    fun getAllItems() {
-        viewModelScope.launch(Dispatchers.IO) {
-            Log.d("TAG", "getAllItems")
-            val toList = ItemRepo.get().getItems()
-            Log.d("TAG", toList.toString())
-            _itemList.postValue(toList.map { itemWithPrices ->
-                DTOUtils.fromEntityToItem(
-                    itemWithPrices
-                )
-            })
-        }
-    }
-
-
-    fun getListItemsById() {
+       fun getListItemsById() {
         viewModelScope.launch(Dispatchers.IO) {
             Log.d("TAG", "getListItemsById")
+            _progress.postValue(true)
             val itemListId = ItemRepo.get().getItems().map { e -> Item(e.entity.id) }
             Log.d("TAG", "list id ${itemListId.toString()}")
 
@@ -44,10 +30,14 @@ class ItemViewModel : ViewModel() {
                     if (code == 200) {
                         _itemList.postValue(response.body())
                     }
+                    _progress.postValue(false)
+
                 }
 
                 override fun onFailure(call: Call<List<Item>>, t: Throwable) {
                  Log.d("TAG", "${t.message}")
+                    _progress.postValue(false)
+
                 }
             })
 
@@ -64,11 +54,11 @@ class ItemViewModel : ViewModel() {
                 0,
                 "плавки",
                 "http://www.baks.r2u/$uuid",
-                imgUrl = uuid.toString(),
+                imgLink = uuid.toString(),
                 host = "http://www.baks.r2u"
             )
 
-            item.listPrice.add(
+            item.priceList.add(
                 com.example.prisewatch.domain.model.Price(
                     0,
                     item.id,

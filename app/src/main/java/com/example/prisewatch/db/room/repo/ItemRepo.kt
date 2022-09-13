@@ -59,4 +59,9 @@ class ItemRepo private constructor(context: Context) {
     fun getById(idItem: Long): ItemWithPrices {
         return itemDao.getItemById(idItem)
     }
+
+    fun getByUrl(urlString: String): ItemWithPrices {
+        val ent = itemDao.getItemByUrl(urlString);
+        return  ent
+    }
 }

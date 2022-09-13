@@ -22,4 +22,7 @@ interface ItemDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(vararg itemEntity: ItemEntity): Array<Long>
+
+    @Query("select * from items where url_link = :urlString")
+    fun getItemByUrl(urlString: String): ItemWithPrices
 }
