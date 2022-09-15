@@ -3,31 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
-
+    app:startDestination="@+id/nav_home_drawer_item">
+    <include app:graph="@navigation/share_navigation" />
     <fragment
-        android:id="@+id/nav_home"
+        android:id="@+id/nav_home_drawer_item"
         android:name="com.example.prisewatch.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_nav_home_to_itemDetailFragment"
             app:destination="@id/itemDetailFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.prisewatch.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
-
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.prisewatch.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
-    <fragment
         android:id="@+id/itemDetailFragment"
         android:name="com.example.prisewatch.ui.home.ItemDetailFragment"
         android:label="ItemDetailFragment" />
+
+
 </navigation>

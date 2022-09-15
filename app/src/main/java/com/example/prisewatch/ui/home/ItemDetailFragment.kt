@@ -1,6 +1,7 @@
 package com.example.prisewatch.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,19 +36,27 @@ class ItemDetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        arguments?.let {
-            idItem = it.getLong(ID_ITEM)
-        }
 
         _binding = FragmentItemDetailBinding.inflate(inflater, container, false)
 
-        img = binding.frItemDetailImg
-        title = binding.frItemDetailTitle
-        shop = binding.frItemDetailShop
+        setupExtraData()
 
+        setuprViews()
         setViewModel()
 
         return binding.root
+    }
+
+    private fun setupExtraData() {
+        arguments?.let {
+            idItem = it.getLong(ID_ITEM)
+        }
+    }
+
+    private fun setuprViews() {
+        img = binding.frItemDetailImg
+        title = binding.frItemDetailTitle
+        shop = binding.frItemDetailShop
     }
 
     private fun setViewModel() {
@@ -56,9 +65,10 @@ class ItemDetailFragment : Fragment() {
 
         viewModel.item.observe(viewLifecycleOwner) {
             val item = DTOUtils.fromEntityToItem(it)
-
+            Log.d("TAG", item.toString())
+            Log.d("TAG", item.fullLinImg())
             Glide.with(requireContext())
-                .load(item.imgLink)
+                .load(item.fullLinImg())
                 .centerCrop()
                 .placeholder(R.color.purple_700)
                 .into(img)

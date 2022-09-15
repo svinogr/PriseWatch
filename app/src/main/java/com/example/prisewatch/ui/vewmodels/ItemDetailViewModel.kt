@@ -16,7 +16,6 @@ class ItemDetailViewModel : ViewModel() {
     fun findById(id: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             _item.postValue(ItemRepo.get().getById(id))
-
             }
         }
     }

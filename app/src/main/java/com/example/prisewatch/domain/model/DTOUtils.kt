@@ -13,6 +13,7 @@ class DTOUtils {
                 itemWithPrices.entity.title,
                 itemWithPrices.entity.urlLink,
                 itemWithPrices.entity.urlImg,
+                itemWithPrices.entity.host
 
                 ).apply {
                 priceList = itemWithPrices.listPrice.map { priceEntity ->

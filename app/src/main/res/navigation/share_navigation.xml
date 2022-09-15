@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/share_navigation"
+    app:startDestination="@id/shareFragment">
+
+    <fragment
+        android:id="@+id/shareFragment"
+        android:name="com.example.prisewatch.ui.share.ShareFragment"
+        android:label="ShareFragment"
+        tools:layout="@layout/fragment_share">
+        <action
+            android:id="@+id/action_shareFragment_to_nav_home"
+            app:destination="@id/nav_home_drawer_item" />
+    </fragment>
+</navigation>

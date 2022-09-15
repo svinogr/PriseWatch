@@ -19,7 +19,7 @@ class ShareItemModel : ViewModel() {
     private val _item = MutableLiveData<Item>()
     val item: LiveData<Item> = _item
     private val _progress = MutableLiveData<Boolean>()
-    val process: LiveData<Boolean> = _progress
+    val progress: LiveData<Boolean> = _progress
 
     fun getItem(urlString: String) {
         // проверяем есть ли в базе
@@ -28,48 +28,50 @@ class ShareItemModel : ViewModel() {
         _progress.postValue(true)
         viewModelScope.launch(Dispatchers.IO) {
             val itemEntity = ItemRepo.get().getByUrl(urlString)
-
+            // проверяем есть ли в базе уже
             if (itemEntity != null) {
                 val item = DTOUtils.fromEntityToItem(itemEntity)
                 if (!dateIsNotOld(item)) {
                     Log.d("TAG", "getFromServerById")
-
                     getFromServerById(item)
                 }
             } else {
                 Log.d("TAG", "getFromServerByUrl")
                 getFromServerByUrl(urlString)
             }
-
-
-
         }
     }
 
     private fun getFromServerByUrl(urlStr: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            ItemRetrofitService.get().getItemByUrl(Item(urlLink = urlStr)).enqueue(object : retrofit2.Callback<Item> {
-                override fun onResponse(call: Call<Item>, response: Response<Item>) {
-                    Log.d("TAG", "resp f url ${response.body()}")
-                    Log.d("TAG", "resp f url ${response.code()}")
-                    val code = response.code()
-                    if (code == 200) {
-                        response.body()?.let {
-                            Log.d("TAG", "item from server $it")
-                            Log.d("TAG", "item from server ${it.priceList[0].price}")
-                            _item.postValue(it)
+            ItemRetrofitService.get().getItemByUrl(Item(urlLink = urlStr))
+                .enqueue(object : retrofit2.Callback<Item> {
+                    override fun onResponse(call: Call<Item>, response: Response<Item>) {
+                        Log.d("TAG", "resp f url ${response.body()}")
+                        Log.d("TAG", "resp f url ${response.code()}")
+                        val code = response.code()
+                        if (code == 200) {
+                            response.body()?.let {
+                                Log.d("TAG", "item from server $it")
+                                Log.d("TAG", "item from server ${it.priceList[0].price}")
+                                _item.postValue(it)
+                                _progress.postValue(false)
+                            }
                         }
                     }
 
+                    override fun onFailure(call: Call<Item>, t: Throwable) {
+                        Log.d("TAG", "${t.message}")
+                    }
+                })
+        }
+    }
 
-                }
-
-                override fun onFailure(call: Call<Item>, t: Throwable) {
-                    Log.d("TAG", "${t.message}")
-
-
-                }
-            })
+    fun saveToDb() {
+        viewModelScope.launch(Dispatchers.IO) {
+            item.value.let {
+                ItemRepo.get().insertItem(it!!)
+            }
         }
     }
 
