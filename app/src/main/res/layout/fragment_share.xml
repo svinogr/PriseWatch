@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:layout_height="match_parent">
 
     <ImageView
@@ -46,7 +47,10 @@
         android:src="@drawable/ic_baseline_addchart_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
+    <include
+        android:id="@+id/home_fr_progress"
+        layout="@layout/progress"
+        />
     <!--  <com.jjoe64.graphview.GraphView
           android:id="@+id/graph"
           android:layout_width="match_parent"

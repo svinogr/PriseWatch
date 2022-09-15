@@ -10,8 +10,5 @@
         android:name="com.example.prisewatch.ui.share.ShareFragment"
         android:label="ShareFragment"
         tools:layout="@layout/fragment_share">
-        <action
-            android:id="@+id/action_shareFragment_to_nav_home"
-            app:destination="@id/nav_home_drawer_item" />
     </fragment>
 </navigation>

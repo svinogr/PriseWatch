@@ -57,17 +57,22 @@ class ShareItemModel : ViewModel() {
                                 _item.postValue(it)
                                 _progress.postValue(false)
                             }
+                        } else {
+                            _progress.postValue(false)
                         }
                     }
 
                     override fun onFailure(call: Call<Item>, t: Throwable) {
                         Log.d("TAG", "${t.message}")
+                        _progress.postValue(false)
                     }
                 })
         }
     }
 
     fun saveToDb() {
+        if (item.value == null) return
+
         viewModelScope.launch(Dispatchers.IO) {
             item.value.let {
                 ItemRepo.get().insertItem(it!!)
@@ -86,15 +91,14 @@ class ShareItemModel : ViewModel() {
                                 _item.postValue(it[0])
                             }
                         }
+                    } else {
+                        _progress.postValue(false)
                     }
-
-
                 }
 
                 override fun onFailure(call: Call<List<Item>>, t: Throwable) {
                     Log.d("TAG", "${t.message}")
-
-
+                    _progress.postValue(false)
                 }
             })
 

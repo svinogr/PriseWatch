@@ -65,8 +65,8 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun progressBarVisible(progressRun: Boolean) {
-        if (progressRun) {
+    private fun progressBarVisible(isVisible: Boolean) {
+        if (isVisible) {
             progress.visibility = View.VISIBLE
         } else {
             progress.visibility = View.GONE
@@ -82,7 +82,7 @@ class HomeFragment : Fragment() {
 
         fabBtn = binding.homeFrFab
 
-        progress = binding.homeFrProgress
+        progress = binding.homeFrProgress.root
     }
 
     override fun onDestroyView() {
