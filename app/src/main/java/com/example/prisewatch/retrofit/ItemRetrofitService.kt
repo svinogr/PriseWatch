@@ -39,4 +39,7 @@ interface ItemRetrofitService  {
 
     @POST("items/url")
     fun getItemByUrl(@Body item: Item): Call<Item>
+
+    @GET("items/all")
+    fun getAll(): Call<List<Item>>
 }

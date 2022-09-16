@@ -36,7 +36,7 @@ class HomeFragment : Fragment() {
         setupButton()
 
         viewmodel.getListItemsById()
-
+        //  viewmodel.onlyForTestInflateDB()
         return binding.root
     }
 

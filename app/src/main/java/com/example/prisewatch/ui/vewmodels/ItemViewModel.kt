@@ -46,6 +46,40 @@ class ItemViewModel : ViewModel() {
         }
     }
 
+
+    fun onlyForTestInflateDB() {
+        viewModelScope.launch(Dispatchers.IO) {
+            Log.d("TAG", "onlyForTestInflateDB")
+            _progress.postValue(true)
+
+
+            ItemRetrofitService.get().getAll().enqueue(object: retrofit2.Callback<List<Item>>{
+                override fun onResponse(call: Call<List<Item>>, response: Response<List<Item>>) {
+                    val code = response.code()
+                    if (code == 200) {
+                        response.body()?.forEach {
+                           viewModelScope.launch(Dispatchers.IO) {
+                               ItemRepo.get().insertItem(it)
+                           }
+                        }
+                        _itemList.postValue(response.body())
+                    }
+                    _progress.postValue(false)
+
+                }
+
+                override fun onFailure(call: Call<List<Item>>, t: Throwable) {
+                    Log.d("TAG", "${t.message}")
+                    _progress.postValue(false)
+
+                }
+            })
+
+            //   itemList.postValue(listItemsById.value)
+
+        }
+    }
+
     fun testAdd() {
         viewModelScope.launch(Dispatchers.IO) {
             val repo = ItemRepo.get()

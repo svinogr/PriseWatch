@@ -7,4 +7,10 @@ data class Price(
     val itemId: Long,
     val price: Double,
     val date: Long
-)
+
+
+) {
+    override fun toString(): String {
+        return "Price(id=$id, itemId=$itemId, price=$price, date=$date)"
+    }
+}
