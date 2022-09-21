@@ -1,5 +1,6 @@
 package com.example.prisewatch.ui.home
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,8 +11,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.prisewatch.MainActivity
+import com.example.prisewatch.MainActivity2
+import com.example.prisewatch.R
 import com.example.prisewatch.databinding.FragmentHomeBinding
 import com.example.prisewatch.ui.vewmodels.ItemViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class HomeFragment : Fragment() {
@@ -20,7 +25,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ItemAdapter
-    private lateinit var fabBtn: FloatingActionButton
+   // private lateinit var fabBtn: FloatingActionButton
     private lateinit var progress: ProgressBar
 
     override fun onCreateView(
@@ -33,19 +38,19 @@ class HomeFragment : Fragment() {
 
         setupViews()
         setupViewModel()
-        setupButton()
+        //   setupButton()
 
         viewmodel.getListItemsById()
-        //  viewmodel.onlyForTestInflateDB()
+        // viewmodel.onlyForTestInflateDB()
         return binding.root
     }
 
-    private fun setupButton() {
-        val btn = binding.homeFrFab
-        btn.setOnClickListener {
-            startAddDiaolog()
-        }
-    }
+    /* private fun setupButton() {
+         val btn = binding.homeFrFab
+         btn.setOnClickListener {
+             startAddDiaolog()
+         }
+     }*/
 
     private fun startAddDiaolog() {
         Log.d("TAG", "Start add url dialog")
@@ -79,8 +84,7 @@ class HomeFragment : Fragment() {
         val linearLayoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
         recyclerView.layoutManager = linearLayoutManager
-
-        fabBtn = binding.homeFrFab
+        Log.d("TAG", "$activity faaaaaaaaaaaaaaaab")
 
         progress = binding.homeFrProgress.root
     }

@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home_drawer_item">
+    app:startDestination="@id/homeFragment">
     <fragment
-        android:id="@+id/nav_home_drawer_item"
+        android:id="@+id/homeFragment"
         android:name="com.example.prisewatch.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home">
@@ -13,16 +13,14 @@
             android:id="@+id/action_nav_home_to_itemDetailFragment"
             app:destination="@id/itemDetailFragment" />
     </fragment>
-
     <fragment
         android:id="@+id/itemDetailFragment"
         android:name="com.example.prisewatch.ui.home.ItemDetailFragment"
-        android:label="ItemDetailFragment" />
-    <activity
-        android:id="@+id/mainActivity"
-        android:name="com.example.prisewatch.MainActivity"
-        android:label="app_bar_main"
-        tools:layout="@layout/app_bar_main" />
-
-
+        android:label="ItemDetailFragment"
+        tools:layout="@layout/fragment_item_detail" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.prisewatch.ui.settings.SettingsFragment"
+        android:label="@string/bottom_menu_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

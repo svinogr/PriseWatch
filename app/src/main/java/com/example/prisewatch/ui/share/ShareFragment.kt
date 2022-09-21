@@ -1,6 +1,5 @@
 package com.example.prisewatch.ui.share
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -11,16 +10,12 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.example.prisewatch.MainActivity
+import com.example.prisewatch.MainActivity2
 import com.example.prisewatch.R
 import com.example.prisewatch.databinding.FragmentShareBinding
-import com.example.prisewatch.ui.home.ItemDetailFragment
 import com.example.prisewatch.ui.vewmodels.ShareItemModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -56,7 +51,7 @@ class ShareFragment : Fragment() {
             override fun onClick(p0: View?) {
                 Log.d("TAG", "fab press share")
                 viemodel.saveToDb()
-                val intent = Intent(context, MainActivity::class.java)
+                val intent = Intent(context, MainActivity2::class.java)
                 startActivity(intent)
             }
         })
